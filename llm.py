@@ -18,17 +18,11 @@ def call_llm(messages):
     if config.args.args_dict:
         payload.update(config.args.args_dict)
 
-    if config.args.max_tokens != -1:
-        payload["max_tokens"] = config.args.max_tokens
-
     if config.args.provider:
         payload["provider"] = {
             "order": [config.args.provider],
             "allow_fallbacks": False,
         }
-
-    if config.args.reasoning is not None:
-        payload["reasoning"] = {"enabled": config.args.reasoning}
 
     if config.args.stream:
         payload["stream"] = True

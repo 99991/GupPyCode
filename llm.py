@@ -15,6 +15,9 @@ def call_llm(messages):
         "tools": tools.TOOL_DEFINITIONS,
     }
 
+    if config.args.args_dict:
+        payload.update(config.args.args_dict)
+
     if config.args.max_tokens != -1:
         payload["max_tokens"] = config.args.max_tokens
 

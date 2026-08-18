@@ -1,6 +1,7 @@
 import os
 import ast
 import prn
+import json
 import argparse
 from datetime import datetime
 
@@ -27,6 +28,7 @@ parser.add_argument("--session-dir", default="~/.local/share/guppycode/sessions/
 parser.add_argument("--session", help="Full path to session file, ignores session dir")
 parser.add_argument("--resume", action="store_true", default=None, help="Resumes the last session")
 parser.add_argument("--reasoning", type=ast.literal_eval, default=None, help="Explicitly enable (or disable) reasoning with `--reasoning True` (or `False`)")
+parser.add_argument("--args-dict", type=json.loads, default=None, help="Extra args to be merged into request dict like e.g. --args-dict '{\"temperature\": 0.7, \"seed\": 0}'")
 args = parser.parse_args()
 
 if args.model == "pro":

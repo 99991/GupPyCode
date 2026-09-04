@@ -108,14 +108,16 @@ def assemble_streaming_response(lines):
             elif key == "tool_calls":
                 for tool_call in value:
                     index = tool_call.pop("index")
-                    arguments = tool_call["function"]["arguments"]
+                    arguments_suffix = tool_call["function"].get("arguments", "")
                     if index not in tool_calls:
                         name = tool_call["function"]["name"]
                         prn.orange(f"\nTool call: {name}", end="\n\t", flush=True)
                         tool_calls[index] = tool_call
                     else:
-                        tool_calls[index]["function"]["arguments"] += arguments
-                    prn.orange(arguments, end="", flush=True)
+                        arguments = tool_calls[index]["function"].get("arguments", "")
+                        arguments += arguments_suffix
+                        tool_calls[index]["function"]["arguments"] = arguments
+                    prn.orange(arguments_suffix, end="", flush=True)
             elif key == "reasoning_details":
                 pass # ignored
             else:

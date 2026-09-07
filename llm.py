@@ -1,3 +1,4 @@
+import os
 import prn
 import tools
 import config
@@ -8,7 +9,7 @@ import collections
 import urllib.request
 import urllib.error
 
-def call_llm(messages):
+def call_llm(messages, session_id=os.urandom(32).hex()):
     payload = {
         "model": config.args.model,
         "messages": messages,
@@ -33,6 +34,9 @@ def call_llm(messages):
         "X-OpenRouter-Title": "GupPyCode",
         "X-OpenRouter-Categories": "cli-agent,programming-app,personal-agent",
         "User-Agent": config.args.user_agent,
+        "x-session": session_id,
+        "x-session-affinity": session_id,
+        "x-opencode-session": session_id,
     }
 
     # Use separate dict so we do not accidentally log the API key
